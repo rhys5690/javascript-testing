@@ -1,8 +1,12 @@
-import { add } from './App';
+import { total } from "./App";
+import { add } from "./add";
 
-test('add', () => {
-    const value = add(1, 2);
-    const value2 = add(5, 7);
-    expect(value).toBe(3);
-    expect(value2).toBe(12);
+// Mock external dependency used by total
+jest.mock("./add", () => ({
+  add: jest.fn(() => 25)
+}));
+
+test("total", () => {
+  expect(total(5, 20)).toBe("$25");
+  expect(add).toHaveBeenCalledTimes(1);
 });
